@@ -19,11 +19,18 @@ bot.on("message", (ctx) => {
     );
     if (regex) {
       let re = new RegExp(regex[1], "g");
-      let newtext = ctx?.message.reply_to_message?.text?.replaceAll(
-        re,
-        msg.slice(-1)[0],
+      let str = ctx?.message.reply_to_message?.text;
+      let newtext = "";
+      if (str) {
+        newtext = str.replaceAll(
+          re,
+          msg.slice(-1)[0],
+        );
+        newtext = newtext == str ? "" : newtext;
+      }
+      ctx.reply(
+        newtext != "" ? newtext : "Something went wrong.",
       );
-      ctx.reply(newtext ? newtext : "Something went wrong.");
     }
     console.log(regex);
   }
