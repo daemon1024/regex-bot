@@ -13,7 +13,7 @@ const bot = new Bot(Deno.env.get("BOT_TOKEN") as string);
 bot.on("message", (ctx) => {
   if (ctx.message?.text === "/start") {
     ctx.reply(
-      "Hi, I am regex bot at your service\. Reply to any message with the syntax /<regex string>/<replacement string",
+      "Hi, I am regex bot at your service. Reply to any message with the syntax \n\n/<regex string>/<replacement string",
     );
   }
   if (
@@ -26,8 +26,8 @@ bot.on("message", (ctx) => {
       /\/((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)\//,
     );
     if (regex) {
-      let re = new RegExp(regex[1]);
-      let newtext = ctx?.message.reply_to_message?.text?.replace(
+      let re = new RegExp(regex[1], "g");
+      let newtext = ctx?.message.reply_to_message?.text?.replaceAll(
         re,
         msg.slice(-1)[0],
       );
