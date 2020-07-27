@@ -12,8 +12,8 @@ const bot = new Bot(Deno.env.get("BOT_TOKEN") as string);
 
 bot.on("message", (ctx) => {
   if (ctx.message?.text === "/start") {
-    ctx.replyWithMarkdownV2(
-      "Hi, I am regex bot at your service. Reply to any message with the syntax ```/<regex string>/<replacement string```",
+    ctx.reply(
+      "Hi, I am regex bot at your service\. Reply to any message with the syntax /<regex string>/<replacement string",
     );
   }
   if (
@@ -31,7 +31,7 @@ bot.on("message", (ctx) => {
         re,
         msg.slice(-1)[0],
       );
-      ctx.reply(newtext ? newtext : "invalid regex");
+      ctx.reply(newtext ? newtext : "Something went wrong.");
     }
     console.log(regex);
   }
