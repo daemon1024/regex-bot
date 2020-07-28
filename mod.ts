@@ -11,27 +11,20 @@ bot.on("message", (ctx) => {
   if (
     ctx.message?.text?.match(
       /\/((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)\//,
-    )
+    ) && ctx?.message.reply_to_message?.text
   ) {
     let msg = ctx.message?.text.split("/");
-    let regex = ctx.message?.text?.match(
-      /\/((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)\//,
-    );
-    if (regex) {
-      let re = new RegExp(regex[1], "g");
-      let str = ctx?.message.reply_to_message?.text;
-      let newtext = "";
-      if (str) {
-        newtext = str.replaceAll(
-          re,
-          msg.slice(-1)[0],
-        );
-        newtext = newtext == str ? "" : newtext;
+    if (msg[0] == "s" && msg.length > 2) {
+      try {
+        let re = msg[3] ? new RegExp(msg[1], msg[3]) : new RegExp(msg[1]);
+        let str = ctx?.message.reply_to_message?.text;
+        let newtext = str.replace(re, msg[2]);
+        newtext == str ? null : ctx.reply(newtext);
+      } catch (error) {
+        console.log(error);
+        ctx.reply("Something went wrong");
       }
-
-      newtext != "" ? ctx.reply(newtext) : undefined;
     }
-    console.log(regex);
   }
 });
 
