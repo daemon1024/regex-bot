@@ -28,9 +28,8 @@ bot.on("message", (ctx) => {
         );
         newtext = newtext == str ? "" : newtext;
       }
-      ctx.reply(
-        newtext != "" ? newtext : "Something went wrong.",
-      );
+
+      newtext != "" ? ctx.reply(newtext) : undefined;
     }
     console.log(regex);
   }
